@@ -188,8 +188,8 @@ def main():
     # Parse arguments.
     parser = argparse.ArgumentParser(
         description="""
-            Determine the software version of a remote BIG-IP management interface. Requires
-            CSV version table.
+            Determine the software version of a remote BIG-IP management interface.
+            Developed with ❤️ by the Bishop Fox Cosmos team.
         """
     )
     parser.add_argument("-t", dest="target", required=True, help="https://example.com")
