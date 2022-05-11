@@ -13,7 +13,7 @@ CVE-2022-1388, a critical vulnerability in the F5 BIG-IP management interface, a
 - Which software version is running on a remote F5 BIG-IP management interface
 - Whether a specific appliance is affected by any known vulnerabilities, including CVE-2022-1388—all without sending any malicious traffic to the server (i.e., risking being blocked by a WAF)
 
-See [full write-up](https:bishopfox.com/blog/big-ip-scanner-cve-2022-1388) for this tool at the Bishop Fox blog, including a complete walkthrough of the methodology behind building the version table.
+See [full write-up](https://bishopfox.com/blog/big-ip-scanner-cve-2022-1388) for this tool at the Bishop Fox blog, including a complete walkthrough of the methodology behind building the version table.
 
 ## Getting started
 
