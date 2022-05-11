@@ -1,8 +1,19 @@
 # BIG-IP Scanner
 
-Determine the running software version of a remote F5 BIG-IP management interface.
+Determine the running software version of a remote F5 BIG-IP management interface. Developed with ❤️ by the [Bishop Fox Cosmos team](https://bishopfox.com/platform).
 
-Developed with ❤️ by the [Bishop Fox Cosmos team](https://bishopfox.com/platform).
+<div align="center">
+    <img src="https://s3.us-east-2.amazonaws.com/s3.bishopfox.com/prod-1437/Images/channels/blog/tiles/Bishop-Fox-BIG-IP-scanner-tool-F.png" width="400px" />
+</div>
+
+
+## Description
+
+CVE-2022-1388, a critical vulnerability in the F5 BIG-IP management interface, allows an attacker to bypass authentication and remotely execute arbitrary system commands. Bishop Fox developed a BIG-IP scanner that you can use to determine:
+- Which software version is running on a remote F5 BIG-IP management interface
+- Whether a specific appliance is affected by any known vulnerabilities, including CVE-2022-1388—all without sending any malicious traffic to the server (i.e., risking being blocked by a WAF)
+
+See [full write-up](https:bishopfox.com/blog/big-ip-scanner-cve-2022-1388) for this tool at the Bishop Fox blog, including a complete walkthrough of the methodology behind building the version table.
 
 ## Getting started
 
@@ -62,6 +73,7 @@ Usage of this tool for attacking targets without prior mutual consent is illegal
 
 ### See also
 
+- [CVE-2022-1388: Scan BIG-IP for Exact Release Versions](https://bishopfox.com/blog/big-ip-scanner-cve-2022-1388)
 - [K33062581: Software Release Date Information](https://support.f5.com/csp/article/K33062581)
 - [K9412: The BIG-IP release matrix](https://support.f5.com/csp/article/K9412)
 - [K23605346: BIG-IP iControl REST vulnerability CVE-2022-1388](https://support.f5.com/csp/article/K23605346)
