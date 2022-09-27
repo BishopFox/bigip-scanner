@@ -20,6 +20,8 @@ import requests.exceptions
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 pd.options.mode.chained_assignment = None
 
+# Support older SSL ciphers.
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = "ALL:@SECLEVEL=1"
 
 # Set up logging.
 logging.basicConfig(
