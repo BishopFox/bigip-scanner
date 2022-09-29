@@ -179,9 +179,10 @@ class BIGIPScanner:
                     ].dt.strftime("%Y-%m-%dT%H:%M:%SZ")
                     return matches.reset_index().drop("index", axis=1)
 
-        matches["modification_time"] = matches["modification_time"].dt.strftime(
-            "%Y-%m-%dT%H:%M:%SZ"
-        )
+        if "modification_time" in matches:
+            matches["modification_time"] = matches["modification_time"].dt.strftime(
+                "%Y-%m-%dT%H:%M:%SZ"
+            )
         return matches.reset_index().drop("index", axis=1)
 
 
@@ -217,17 +218,20 @@ def main():
 
     # Group, sort, serialize, and print results.
     matches = scanner.scan_target(target=args.target, request_all=args.request_all)
-    print(
-        json.dumps(
-            matches.groupby(["version", "precision"])
-            .first()
-            .sort_values(
-                ["precision"], key=lambda x: x.map({"exact": 0, "approximate": 1})
+    if not matches.empty:
+        print(
+            json.dumps(
+                matches.groupby(["version", "precision"])
+                .first()
+                .sort_values(
+                    ["precision"], key=lambda x: x.map({"exact": 0, "approximate": 1})
+                )
+                .reset_index()
+                .to_dict("records")
             )
-            .reset_index()
-            .to_dict("records")
         )
-    )
+    else:
+        print("[]")
 
 
 if __name__ == "__main__":
