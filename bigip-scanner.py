@@ -231,7 +231,7 @@ def main():
             )
         )
     else:
-        print("{}")
+        print("[]")
 
 
 if __name__ == "__main__":
