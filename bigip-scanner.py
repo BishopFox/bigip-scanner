@@ -192,10 +192,11 @@ def main():
     parser = argparse.ArgumentParser(
         description="""
             Determine the software version of a remote BIG-IP management interface.
-            Developed with ❤️ by the Bishop Fox Cosmos team.
+            Developed with ❤ by the Bishop Fox Cosmos team.
         """
     )
-    parser.add_argument("-t", dest="target", required=True, help="https://example.com")
+    parser.add_argument("-t", dest="target", help="https://example.com")
+    parser.add_argument("-f", "--file", dest="file", help="File with a list of IP addresses")
     parser.add_argument(
         "-v",
         dest="version_table",
@@ -211,28 +212,40 @@ def main():
     parser.add_argument("-d", dest="debug", action="store_true", help="debug mode")
     args = parser.parse_args()
 
+    if not args.target and not args.file:
+        print("You must provide either a target (-t) or a file (-f) with IP addresses.")
+        sys.exit(1)
+
     if args.debug:
         logger.setLevel(logging.DEBUG)
 
     scanner = BIGIPScanner(version_table=args.version_table)
 
-    # Group, sort, serialize, and print results.
-    matches = scanner.scan_target(target=args.target, request_all=args.request_all)
-    if not matches.empty:
-        print(
-            json.dumps(
-                matches.groupby(["version", "precision"])
-                .first()
-                .sort_values(
-                    ["precision"], key=lambda x: x.map({"exact": 0, "approximate": 1})
-                )
-                .reset_index()
-                .to_dict("records")
-            )
-        )
-    else:
-        print("[]")
+    # Check if -t or -f was provided and set targets accordingly.
+    if args.target:
+        targets = [args.target]
+    elif args.file:
+        with open(args.file, 'r') as file:
+            targets = [line.strip() for line in file.readlines()]
 
+    # Loop through each target.
+    for target in targets:
+        print(f"Scanning target: {target}")
+        matches = scanner.scan_target(target=target, request_all=args.request_all)
+        if not matches.empty:
+            print(
+                json.dumps(
+                    matches.groupby(["version", "precision"])
+                    .first()
+                    .sort_values(
+                        ["precision"], key=lambda x: x.map({"exact": 0, "approximate": 1})
+                    )
+                    .reset_index()
+                    .to_dict("records")
+                )
+            )
+        else:
+            print("[]")
 
 if __name__ == "__main__":
     main()
